@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MultiBiz Manager 5.0</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet">
+  <link href="styles/styles.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white font-sans">
+  <!-- Barra Superior -->
+  <header class="bg-gray-800 p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-blue-400">MultiBiz Manager 5.0</h1>
+    <div class="flex items-center space-x-4">
+      <button id="toggleTema" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+        Alternar Tema
+      </button>
+    </div>
+  </header>
+
+  <!-- Layout Principal -->
+  <div class="flex">
+    <!-- Menu Lateral -->
+    <aside class="bg-gray-800 w-64 min-h-screen p-4">
+      <nav>
+        <ul class="space-y-2">
+          <li><a href="#dashboard" class="flex items-center p-2 text-gray-400 hover:bg-gray-700 rounded">📊 Dashboard</a></li>
+          <li><a href="#estoque" class="flex items-center p-2 text-gray-400 hover:bg-gray-700 rounded">📦 Estoque</a></li>
+          <li><a href="#servicos" class="flex items-center p-2 text-gray-400 hover:bg-gray-700 rounded">🛠️ Serviços</a></li>
+          <li><a href="#financeiro" class="flex items-center p-2 text-gray-400 hover:bg-gray-700 rounded">💼 Financeiro</a></li>
+          <li><a href="#rh" class="flex items-center p-2 text-gray-400 hover:bg-gray-700 rounded">👥 RH</a></li>
+          <li><a href="#resumoMensal" class="flex items-center p-2 text-gray-400 hover:bg-gray-700 rounded">📅 Resumo Mensal</a></li>
+          <li><a href="#calendario" class="flex items-center p-2 text-gray-400 hover:bg-gray-700 rounded">🗓️ Calendário</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="flex-1 p-8">
+      <!-- Dashboard -->
+      <section id="dashboard" class="content-section">
+        <h2 class="text-xl font-bold mb-4 text-blue-400">Dashboard</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div class="bg-gray-800 p-6 rounded-lg">
+            <h3 class="text-lg font-bold mb-2">Total de Receitas</h3>
+            <p id="totalReceitas" class="text-gray-400">R$ 0,00</p>
+          </div>
+          <div class="bg-gray-800 p-6 rounded-lg">
+            <h3 class="text-lg font-bold mb-2">Total de Despesas</h3>
+            <p id="totalDespesas" class="text-gray-400">R$ 0,00</p>
+          </div>
+          <div class="bg-gray-800 p-6 rounded-lg">
+            <h3 class="text-lg font-bold mb-2">Saldo Atual</h3>
+            <p id="saldoAtual" class="text-gray-400">R$ 0,00</p>
+          </div>
+          <div class="bg-gray-800 p-6 rounded-lg">
+            <h3 class="text-lg font-bold mb-2">Funcionários Ativos</h3>
+            <p id="totalAtivos" class="text-gray-400">0</p>
+          </div>
+          <div class="bg-gray-800 p-6 rounded-lg">
+            <h3 class="text-lg font-bold mb-2">Funcionários Desativados</h3>
+            <p id="totalDesativados" class="text-gray-400">0</p>
+          </div>
+          <div class="bg-gray-800 p-6 rounded-lg col-span-3">
+            <h3 class="text-lg font-bold mb-2">Valor do Dólar</h3>
+            <p id="valorDolar" class="text-gray-400">Carregando...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Estoque -->
+      <section id="estoque" class="content-section hidden">
+        <h2 class="text-xl font-bold mb-4 text-blue-400">Estoque</h2>
+        <form id="formEstoque" class="bg-gray-800 p-6 rounded-lg mb-4">
+          <div class="mb-4">
+            <label for="produto" class="block text-gray-400">Produto</label>
+            <input type="text" id="produto" class="w-full p-2 bg-gray-700 text-white rounded" required>
+          </div>
+          <div class="mb-4">
+            <label for="quantidade" class="block text-gray-400">Quantidade</label>
+            <input type="number" id="quantidade" class="w-full p-2 bg-gray-700 text-white rounded" required>
+          </div>
+          <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Incluir</button>
+        </form>
+        <table id="tabelaEstoque" class="w-full bg-gray-800 rounded-lg overflow-hidden">
+          <thead>
+            <tr class="bg-gray-700">
+              <th class="p-3 text-left">Produto</th>
+              <th class="p-3 text-left">Quantidade</th>
+              <th class="p-3 text-left">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dados serão inseridos dinamicamente via JavaScript -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Serviços -->
+      <section id="servicos" class="content-section hidden">
+        <h2 class="text-xl font-bold mb-4 text-blue-400">Serviços</h2>
+        <form id="formServicos" class="bg-gray-800 p-6 rounded-lg mb-4">
+          <div class="mb-4">
+            <label for="servico" class="block text-gray-400">Serviço</label>
+            <input type="text" id="servico" class="w-full p-2 bg-gray-700 text-white rounded" required>
+          </div>
+          <div class="mb-4">
+            <label for="dataServico" class="block text-gray-400">Data</label>
+            <input type="date" id="dataServico" class="w-full p-2 bg-gray-700 text-white rounded" required>
+          </div>
+          <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Agendar</button>
+        </form>
+        <table id="tabelaServicos" class="w-full bg-gray-800 rounded-lg overflow-hidden">
+          <thead>
+            <tr class="bg-gray-700">
+              <th class="p-3 text-left">Serviço</th>
+              <th class="p-3 text-left">Data</th>
+              <th class="p-3 text-left">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dados serão inseridos dinamicamente via JavaScript -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Financeiro -->
+      <section id="financeiro" class="content-section hidden">
+        <h2 class="text-xl font-bold mb-4 text-blue-400">Financeiro</h2>
+        <form id="formFinanceiro" class="bg-gray-800 p-6 rounded-lg mb-4">
+          <div class="mb-4">
+            <label for="descricaoFinanceiro" class="block text-gray-400">Descrição</label>
+            <input type="text" id="descricaoFinanceiro" class="w-full p-2 bg-gray-700 text-white rounded" required>
+          </div>
+          <div class="mb-4">
+            <label for="valorFinanceiro" class="block text-gray-400">Valor</label>
+            <input type="number" id="valorFinanceiro" class="w-full p-2 bg-gray-700 text-white rounded" required>
+          </div>
+          <div class="mb-4">
+            <label for="dataFinanceiro" class="block text-gray-400">Data</label>
+            <input type="date" id="dataFinanceiro" class="w-full p-2 bg-gray-700 text-white rounded" required>
+          </div>
+          <div class="mb-4">
+            <label for="categoriaFinanceiro" class="block text-gray-400">Categoria</label>
+            <select id="categoriaFinanceiro" class="w-full p-2 bg-gray-700 text-white rounded">
+              <option value="receita">Receita</option>
+              <option value="despesa">Despesa</option>
+            </select>
+          </div>
+          <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Incluir</button>
+        </form>
+
+        <!-- Tabela de Receitas -->
+        <h3 class="text-lg font-bold mb-4 text-blue-400">Receitas</h3>
+        <table id="tabelaReceitas" class="w-full bg-gray-800 rounded-lg overflow-hidden mb-8">
+          <thead>
+            <tr class="bg-gray-700">
+              <th class="p-3 text-left">Descrição</th>
+              <th class="p-3 text-left">Valor</th>
+              <th class="p-3 text-left">Data</th>
+              <th class="p-3 text-left">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dados serão inseridos dinamicamente via JavaScript -->
+          </tbody>
+        </table>
+
+        <!-- Tabela de Despesas -->
+        <h3 class="text-lg font-bold mb-4 text-blue-400">Despesas</h3>
+        <table id="tabelaDespesas" class="w-full bg-gray-800 rounded-lg overflow-hidden">
+          <thead>
+            <tr class="bg-gray-700">
+              <th class="p-3 text-left">Descrição</th>
+              <th class="p-3 text-left">Valor</th>
+              <th class="p-3 text-left">Data</th>
+              <th class="p-3 text-left">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dados serão inseridos dinamicamente via JavaScript -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- RH -->
+      <section id="rh" class="content-section hidden">
+        <h2 class="text-xl font-bold mb-4 text-blue-400">Recursos Humanos</h2>
+        <form id="formRH" class="bg-gray-800 p-6 rounded-lg mb-4">
+          <div class="mb-4">
+            <label for="nomeRH" class="block text-gray-400">Nome</label>
+            <input type="text" id="nomeRH" class="w-full p-2 bg-gray-700 text-white rounded" required>
+          </div>
+          <div class="mb-4">
+            <label for="cargoRH" class="block text-gray-400">Cargo</label>
+            <input type="text" id="cargoRH" class="w-full p-2 bg-gray-700 text-white rounded" required>
+          </div>
+          <div class="mb-4">
+            <label for="salarioRH" class="block text-gray-400">Salário</label>
+            <input type="number" id="salarioRH" class="w-full p-2 bg-gray-700 text-white rounded" required>
+          </div>
+          <div class="mb-4">
+            <label for="dataAdmissaoRH" class="block text-gray-400">Data de Admissão</label>
+            <input type="date" id="dataAdmissaoRH" class="w-full p-2 bg-gray-700 text-white rounded" required>
+          </div>
+          <div class="mb-4">
+            <label for="statusRH" class="block text-gray-400">Status</label>
+            <select id="statusRH" class="w-full p-2 bg-gray-700 text-white rounded">
+              <option value="ativo">Ativo</option>
+              <option value="desativado">Desativado</option>
+            </select>
+          </div>
+          <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Incluir</button>
+        </form>
+        <table id="tabelaRH" class="w-full bg-gray-800 rounded-lg overflow-hidden">
+          <thead>
+            <tr class="bg-gray-700">
+              <th class="p-3 text-left">Nome</th>
+              <th class="p-3 text-left">Cargo</th>
+              <th class="p-3 text-left">Salário</th>
+              <th class="p-3 text-left">Data de Admissão</th>
+              <th class="p-3 text-left">Férias</th>
+              <th class="p-3 text-left">Status</th>
+              <th class="p-3 text-left">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dados serão inseridos dinamicamente via JavaScript -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Resumo Mensal -->
+      <section id="resumoMensal" class="content-section hidden">
+        <h2 class="text-xl font-bold mb-4 text-blue-400">Resumo Mensal</h2>
+        <div id="listaMeses" class="mb-4">
+          <!-- Meses serão inseridos dinamicamente via JavaScript -->
+        </div>
+        <div id="detalhesMes" class="bg-gray-800 p-6 rounded-lg">
+          <!-- Detalhes do mês selecionado serão carregados aqui -->
+        </div>
+      </section>
+
+      <!-- Calendário -->
+      <section id="calendario" class="content-section hidden">
+        <h2 class="text-xl font-bold mb-4 text-blue-400">Calendário</h2>
+        <div id="calendarioContainer" class="bg-gray-800 p-6 rounded-lg"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>

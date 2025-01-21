@@ -1,0 +1,86 @@
+/* Efeitos de Neon */
+.neon-text {
+    text-shadow: 0 0 5px #00b4d8, 0 0 10px #00b4d8, 0 0 20px #00b4d8;
+  }
+  
+  .neon-border {
+    border: 2px solid #00b4d8;
+    box-shadow: 0 0 5px #00b4d8, 0 0 10px #00b4d8;
+  }
+  
+  /* Animações */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+ 
+  
+  /* Modo Claro */
+  .claro {
+    background-color: #ffffff;
+    color: #000000;
+  }
+  
+  .claro header, .claro aside {
+    background-color: #f3f4f6;
+  }
+  
+  /* Modo Neon */
+  .neon {
+    background-color: #1a1a1a;
+    color: #00ffcc;
+  }
+  
+  .neon header, .neon aside {
+    background-color: #2a2a2a;
+  }
+  
+  .neon .neon-text {
+    text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+  }
+  
+  /* Ajustes de responsividade */
+@media (max-width: 768px) {
+    aside {
+      width: 100%;
+      height: auto;
+      position: static;
+    }
+  
+    main {
+      padding: 1rem;
+    }
+  
+    .flex {
+      flex-direction: column;
+    }
+  
+    .grid-cols-1 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+  
+    .grid-cols-3 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+  
+    .w-64 {
+      width: 100%;
+    }
+  
+    .p-8 {
+      padding: 1rem;
+    }
+  
+    .text-xl {
+      font-size: 1.25rem;
+    }
+  
+    .text-2xl {
+      font-size: 1.5rem;
+    }
+  }
